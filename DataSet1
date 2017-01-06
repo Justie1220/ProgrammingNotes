@@ -1,0 +1,54 @@
+ private bool DataSetPopulated(ref DataSet ds)
+        {
+            bool bRetVal = false;
+            try
+            { 
+                DataTable dt = new DataTable("About Me");
+                dt.Columns.Add("Gender");
+                DataRow dr = dt.NewRow();
+                string strGender = "";
+                if (optFemale.Checked)
+                {
+                    strGender = "Female";
+                }
+                else if (optMale.Checked)
+                {
+                    strGender = "Male";
+                }
+                dr["Gender"] = strGender;
+                dt.Rows.Add(dr);
+                DataTable dt2 = new DataTable("Name");
+                dt2.Columns.Add("First");
+                dt2.Columns.Add("Last");
+                DataRow dr2 = dt2.NewRow();
+                string strFirstName = txtFirstNameInput.Text;
+                string strLastName = txtLastNameInput.Text;
+                dr2["First"] = strFirstName;
+                dr2["Last"] = strLastName;
+                dt2.Rows.Add(dr2);
+                DataTable dt3 = new DataTable("Address");
+                dt3.Columns.Add("Street");
+                dt3.Columns.Add("City");
+                dt3.Columns.Add("State");
+                dt3.Columns.Add("Zip");
+                DataRow dr3 = dt3.NewRow();
+                string street = txtStreetInput.Text;
+                string city = txtCityInput.Text;
+                string state = txtStateInput.Text;
+                string zip = cboZipCode.Text;
+                dr3["Street"] = street;
+                dr3["City"] = city;
+                dr3["State"] = state;
+                dr3["Zip"] = zip;
+                dt3.Rows.Add(dr3);
+                DataTable dt4 = new DataTable("Interests");
+                DataRow dr4 = dt4.NewRow();
+                dr4["Sports"] = chkSports.Checked.ToString();
+                dr4["Farming"] = chkFarming.Checked.ToString();
+                dr4["Music"] = chkMusic.Checked.ToString();
+                dr4["Art"] = chkArt.Checked.ToString();
+                dr4["School"] = chkSchool.Checked.ToString();
+                dr4["Animals"] = chkAnimals.Checked.ToString();
+                dr4["Computers"] = chkComputers.Checked.ToString();
+                dr4["Fitness"] = chkFitness.Checked.ToString();
+                dt4.Rows.Add(dr4);
