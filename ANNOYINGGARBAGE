@@ -1,0 +1,117 @@
+public partial class JaredLynch : Form
+    {
+        public JaredLynch()
+        {
+            InitializeComponent();
+        }
+
+        private void InitializeUI()
+        {
+            txtSourceFile.Text = "";
+            txtSourceFile.Enabled = false;
+            cboColumns.Enabled = false;
+            cboTables.Enabled = false;
+            cboValue.Enabled = false;
+            cboColumns.Text = "";
+            cboTables.Text = "";
+            cboValue.Text = "";
+            btnColumnsEdit.Enabled = false;
+            btnTablesEdit.Enabled = false;
+            btnSave.Enabled = false;
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+        private void JaredLynch_Load(object sender, EventArgs e)
+        {
+            InitializeUI();
+        }
+
+        private void btnDone_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            //InitializeUI();
+            OpenFileDialog browseFileDialog = new OpenFileDialog();
+            browseFileDialog.DefaultExt = "xml";
+            browseFileDialog.Filter = "XML File (*.xml) |*.xml|All Files (*.*)| (*.*)";
+            browseFileDialog.Title = "Please select source file:";
+            browseFileDialog.FileName = "";
+            if (browseFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (browseFileDialog.FileName.Trim().IndexOf(".xml") != -1)
+                {
+                    txtSourceFile.Text = browseFileDialog.FileName.Trim();
+
+                }
+                else
+                {
+                    MessageBox.Show(browseFileDialog.FileName + "\n does not appear to be a valid XML file.", "Invalid Source File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                if (txtSourceFile.Text != "")
+                {
+                    cboTables.Enabled = true;
+                }
+
+                DataSet dsXMLInput = new DataSet();
+                DataTableCollection Tables = dsXMLInput.Tables;
+                foreach (DataTable Table in Tables)
+                {
+                    DataRowCollection TableRows = Table.Rows;
+                    object[] objTableRows = new object[TableRows.Count];
+                    TableRows.CopyTo(objTableRows, 0);
+                    DataRow dr = (DataRow)objTableRows[0];
+                    cboTables.Items.Add(dr);
+                }
+
+
+            }
+
+        }
+
+        private void PopulateDataSet (ref DataSet dsXMLInput)
+        {
+
+        }
+
+
+
+
+        private void btnTablesEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboTables_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            
+              
+        }
+
+
+
+
+
+
+
+
+
+    }
+}
