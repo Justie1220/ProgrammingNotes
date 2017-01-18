@@ -1,0 +1,20 @@
+ private void txtValue_TextChanged(object sender, EventArgs e)
+        {
+            string strValue = txtValue.Text;
+            bool boolValue = true;
+            if (strValue == txtValue.Text)
+            {
+               boolValue = true;
+            }
+            else
+            {
+                boolValue = false;
+            }
+            if (boolValue == true)
+            {
+                btnSave.Enabled = false;
+            }
+            else
+            {
+                btnSave.Enabled = true;
+            }
