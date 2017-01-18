@@ -1,0 +1,10 @@
+private void txtSourceFileContentsValue_TextChanged(object sender, EventArgs e)
+        {
+            if ((txtSourceFileContentsValue.Enabled) && (boolValue == true))
+                {
+                btnValueSave.Enabled = true;
+                boolValue = false;
+                return;
+            }
+                boolValue = true;
+        }
