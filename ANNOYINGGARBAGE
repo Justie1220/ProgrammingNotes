@@ -1,5 +1,19 @@
-public partial class JaredLynch : Form
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication1
+{
+    public partial class JaredLynch : Form
     {
+        DataSet dsXMLInput = new DataSet();
+        bool boolValue;
         public JaredLynch()
         {
             InitializeComponent();
@@ -11,16 +25,16 @@ public partial class JaredLynch : Form
             txtSourceFile.Enabled = false;
             cboColumns.Enabled = false;
             cboTables.Enabled = false;
-            cboValue.Enabled = false;
+            txtValue.Enabled = false;
             cboColumns.Text = "";
             cboTables.Text = "";
-            cboValue.Text = "";
+            txtValue.Text = "";
             btnColumnsEdit.Enabled = false;
             btnTablesEdit.Enabled = false;
             btnSave.Enabled = false;
 
 
-
+            
 
 
 
@@ -38,6 +52,8 @@ public partial class JaredLynch : Form
         private void JaredLynch_Load(object sender, EventArgs e)
         {
             InitializeUI();
+
+
         }
 
         private void btnDone_Click(object sender, EventArgs e)
@@ -47,7 +63,8 @@ public partial class JaredLynch : Form
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            //InitializeUI();
+            InitializeUI();
+            //DataSet dsXMLInput = new DataSet();
             OpenFileDialog browseFileDialog = new OpenFileDialog();
             browseFileDialog.DefaultExt = "xml";
             browseFileDialog.Filter = "XML File (*.xml) |*.xml|All Files (*.*)| (*.*)";
@@ -58,6 +75,7 @@ public partial class JaredLynch : Form
                 if (browseFileDialog.FileName.Trim().IndexOf(".xml") != -1)
                 {
                     txtSourceFile.Text = browseFileDialog.FileName.Trim();
+                    dsXMLInput.ReadXml(browseFileDialog.FileName.Trim());
 
                 }
                 else
@@ -69,7 +87,7 @@ public partial class JaredLynch : Form
                     cboTables.Enabled = true;
                 }
 
-                DataSet dsXMLInput = new DataSet();
+
                 DataTableCollection Tables = dsXMLInput.Tables;
                 foreach (DataTable Table in Tables)
                 {
@@ -77,19 +95,50 @@ public partial class JaredLynch : Form
                     object[] objTableRows = new object[TableRows.Count];
                     TableRows.CopyTo(objTableRows, 0);
                     DataRow dr = (DataRow)objTableRows[0];
-                    cboTables.Items.Add(dr);
+                    object[] RowValues = new object[dr.ItemArray.GetLength(0)];
+                    RowValues = dr.ItemArray;
+                    cboTables.Items.Add(Table.TableName);
+                    //Below is failed attempts at making this work. lol
+                    /*cboTables.DataSource = dsXMLInput.Tables[0];
+                    cboTables.BindingContext = this.BindingContext;
+                    cboTables.DisplayMember = dsXMLInput.Tables.ToString();*/
+
+
                 }
 
+              
 
             }
 
         }
 
-        private void PopulateDataSet (ref DataSet dsXMLInput)
+
+       /* public void PopulateDataSet(ref DataSet dsXMLInput)
         {
+            DataColumnCollection Columns = dsXMLInput.Tables.Columns;
+            foreach (DataColumn Column in Columns)
+            {
+                DataColumnCollection TableColumns = Table.Columns;
+                object[] objTableColumns = new object[TableColumns.Count];
+                TableColumns.CopyTo(objTableColumns, 0);
+                DataRow dr = (DataRow)objTableColumns[0];
+                object[] ColumnValues = new object[dr.ItemArray.GetLength(0)];
+                ColumnValues = dr.ItemArray;
+                cboColumns.Items.Add(Table.TableName);
+            }
+         }
+         */
 
+            private void PopulateDataSet(ref DataSet dsXMLInput)
+        {
+            cboColumns.Items.Clear();
+            int intTableIndex = dsXMLInput.Tables.IndexOf(cboTables.Text);
+            DataColumnCollection Columns = dsXMLInput.Tables[intTableIndex].Columns;
+            foreach(DataColumn Column in Columns)
+            {
+                cboColumns.Items.Add(Column.ToString());
+            }
         }
-
 
 
 
@@ -98,20 +147,80 @@ public partial class JaredLynch : Form
 
         }
 
+
+
+
+
         private void cboTables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            
-              
+            if (cboTables.Text != "" && cboColumns.Text == "")
+            {
+                cboColumns.Enabled = true;
+                PopulateDataSet(ref dsXMLInput);
+                txtValue.Text = "";
+                
+            }
+            else
+            {
+                cboColumns.Text = "";
+                cboColumns.Enabled = true;
+                txtValue.Enabled = false;
+                txtValue.Text = "";
+                
+            }
+
+
         }
 
+        
+
+        private void cboColumns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboColumns.Text != "" && txtValue.Text == "")
+            {
+                
+                txtValue.Enabled = true;
+                int intTableIndex = dsXMLInput.Tables.IndexOf(cboTables.Text);
+                txtValue.Text = dsXMLInput.Tables[intTableIndex].Rows[0][cboColumns.Text].ToString();
+                
+
+            }
+           else
+            {
+               txtValue.Text = "";
+               txtValue.Enabled = false;
+               
+
+
+            }
 
 
 
+        }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.DefaultExt = "xml";
+            saveFileDialog.Filter = "XML File (*.xml) | *.xml|All Files (*.*)|(*.*)";
+            saveFileDialog.Title = "Save File As...";
+            saveFileDialog.FileName = "";
+            saveFileDialog.ShowDialog();
 
+        }
 
-
-
+        private void txtValue_TextChanged(object sender, EventArgs e)
+        {
+            if((txtValue.Enabled) && (boolValue == true))
+            {
+                btnSave.Enabled = true;
+                boolValue = false;
+                return;
+            }
+            else
+            {
+                boolValue = true;
+            }
+        }
     }
 }
