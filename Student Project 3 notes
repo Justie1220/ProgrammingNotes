@@ -28,3 +28,6 @@ else
       lblVisible = false;
       Applications.DoEvent();
       myParent.Wait(.4f);
+Public object [] lstitems
+lstCommonItems.Items.CopyTo(objRetVal);
+char[] cInvalid = > < / (Space) [ ] = , 
