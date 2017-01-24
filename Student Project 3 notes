@@ -1,0 +1,30 @@
+if (lstCommonFiles.Items.IndexOf(txtAddNew.Text) < 0
+  {
+    lstCommonItems.Item.ADd(TxtAddNew.Text.Trim());
+    txtAddNew.Text = "";
+    btnAdd = false;
+  }
+else
+  {
+    MessageBox.Show
+  }
+  public partial class frmAdd : Form
+  {
+    frmMain myParent = null;
+    public frmAdd(frmMain frmMainForm)
+    {
+      InitializeComponent();
+      myParent = frmMainForm;
+    }
+    frmAdd myAddForm = new frmAdd(this);
+    myAddForm.DisplayText = "Current Dataset Tables";
+    object[] objTemp = new objec[cboTables.Items.Count[];
+    myAddForm.listItems = objTemp;
+  FlashLabel(lblInvalidCharacters)
+  Private void FlashLabel(Label lbl)
+  {
+    for(int i = 0; i < 2; i++)
+    {
+      lblVisible = false;
+      Applications.DoEvent();
+      myParent.Wait(.4f);
