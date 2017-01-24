@@ -17,6 +17,7 @@ else
       myParent = frmMainForm;
     }
     frmAdd myAddForm = new frmAdd(this);
+    myAddForm.ShowDialog();
     myAddForm.DisplayText = "Current Dataset Tables";
     object[] objTemp = new objec[cboTables.Items.Count[];
     myAddForm.listItems = objTemp;
