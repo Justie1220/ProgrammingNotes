@@ -32,3 +32,20 @@ else
 Public object [] lstitems
 lstCommonItems.Items.CopyTo(objRetVal);
 char[] cInvalid = > < / (Space) [ ] = , 
+//btnCancel has a dialog result property of cancel!
+
+
+
+public object[] ListItems
+        {
+            get
+            {
+                object[] objRetVal = new object[lstCommonItems.Items.Count];
+                    lstCommonItems.Items.CopyTo(objRetVal, 0);
+                return objRetVal;
+            }
+            set
+            {
+                lstCommonItems.Items.AddRange(value);
+            }
+        }
