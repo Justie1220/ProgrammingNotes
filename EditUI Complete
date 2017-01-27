@@ -1,0 +1,52 @@
+public string DisplayText 
+{ 
+  get
+   { 
+    return lblDisplayText.Text;
+   }
+   set
+   {
+    lblDisplayText.Text = value;
+   }
+  public object[] ListItems
+        {
+            get
+            {
+                object[] objRetVal = new object[lstboxValues.Items.Count];
+                lstboxValues.Items.CopyTo(objRetVal, 0);
+                return objRetVal;
+            }
+            set
+            {
+                lstboxValues.Items.AddRange(value);
+            }
+        }
+private void btnAdd_Click(object sender, EventArgs, e)
+  {
+     string strInputText = txtInput.Text.Trim();
+            int intValue = strInputText.IndexOfAny(new char[] { '<', '>', '/', '[', ']', ' ', '=' });
+           if txtInput.Text.IndexofAny(cInvalid) < 0)
+           { 
+            if lstboxValues.Items.IndexOf(txtInput.Text) < 0
+            {
+              lstboxValues.Items.Add(txtInput.Text.Trim());
+              txtInput.Text = "";
+              btnAdd.Enabled = False;
+            }
+            else
+            {
+              MessageBox.Show
+            }
+private void lstboxValues_SelectedIndexChanged(object sender, EventArgs e)
+{
+  btnRemove.Enabled = false;
+  if(lstboxValues.SelectedIndex >= 0)
+    {
+    btnRemove.Enabled = true;
+    }
+}
+private void btnRemove_Click(object sender, EventArgs e)
+{
+  lstboxValues.Itmes.RemoveAt(lstboxValues.SelectedIndex);
+}
+            
