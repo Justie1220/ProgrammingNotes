@@ -1,0 +1,61 @@
+ private void btnTablesEdit_Click(object sender, EventArgs e)
+        {
+            frmEdit myFormAdd = new frmEdit(this);
+            object[] objTemp = new object[cboTables.Items.Count];
+            cboTables.Items.CopyTo(objTemp, 0);
+            myFormAdd.ListItems = objTemp;
+            myFormAdd.Text = "Editing Tables";
+            myFormAdd.ShowDialog();
+            if (myFormAdd.ShowDialog() != DialogResult.Cancel)
+            {
+              objTemp = myFormAdd.ListItems;
+            }
+            foreach (String strTableName in objTemp)
+            {
+              if (cboTables.Items.IndexOf(strTableName) < 0)
+              {
+                cboTables.Items.Add(strTableName);
+                dsXMLInput.Tables.Add(strTableName);
+                dsXMLInput.Tables[dsXMLInput.Tables.Indexof(strTableName)].Rows.Add();
+              }
+            }
+            do
+            {
+              Application.DoEvents();
+            } while (DeleteFromComboBox(objTemp, cboTables, true));
+            SaveFiles();
+            InitializeUI();
+            LoadTableNamesComboBox();
+private void DeleteFromComboBox(object[] objTemp, ComboBox cbo, bool bIsTable)
+{
+  bool BRetVal = false;
+  foreach (strName in cbo.Items)
+  {
+    if (!objtemp.Contains(strName))
+    {
+      cboItems.Remove(strName)
+      if(bIsTable)
+      {
+        if (dsXMLInput.Tables.Contains(strName))
+        {
+          dsXMLInput.Tables.remove(strName);
+        }
+      }
+      else
+      {
+        dsXMLInput.Tables[dsXMLInput.Tables.IndexOf(strTableName)].Columns.Remove(strName);
+      }
+private void SaveFile
+{
+  string strFileSpec - txtXMLSourceFile.Text
+  int iTheLastDot = strFilespec.LastIndexOF(".")
+  if iTheLastDot >0)
+  { strFileSpec = strFileSpec.Substring(0, iTheLastDot) + ".txt";
+  }
+  
+
+           
+            
+          
+
+        }
